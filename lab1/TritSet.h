@@ -8,8 +8,6 @@
 #include <unordered_map>
 #include "Trit.h"
 
-typedef unsigned int uint;
-
 //класс массива тритов
 class TritSet {
 private:
@@ -26,28 +24,19 @@ public:
     public:
         //объявление
         reference(TritSet* base, uint index);
+        reference(const TritSet* base, uint index);
+
+        //приведение к Trit
+        operator Trit();
+        operator Trit() const;
 
         //вставить трит
         void setTrit(Trit value);
         //получить трит
-        Trit getTrit();
+        [[nodiscard]] Trit getTrit() const;
 
-        //приведение к Trit
-        operator Trit();
         //присваивание
         reference& operator=(Trit value);
-
-        //проверка на равенство
-        bool operator==(Trit value);
-        //проверка на неравенство
-        bool operator!=(Trit value);
-
-        //логическое "не"
-        Trit operator~();
-        //логическое "и"
-        Trit operator&(Trit value);
-        //логическое "или"
-        Trit operator|(Trit value);
     };
 
     //вычислить длину t_data
@@ -60,14 +49,16 @@ public:
 
     //обращение к элементу
     reference operator[](uint index);
+    Trit operator[](uint index) const;
     //копирование тритсета
     TritSet(const TritSet& t);
+    TritSet& operator=(const TritSet& t);
 
     //количественные показатели тритсета
-    uint capacity() const;
-    uint length();
-    int cardinality(Trit value);
-    std::unordered_map<Trit, int> cardinality();
+    [[nodiscard]] uint capacity() const;
+    [[nodiscard]] uint length() const;
+    [[nodiscard]] int cardinality(Trit value) const;
+    [[nodiscard]] std::unordered_map<Trit, int> cardinality() const;
 
     //расширение и уменьшение тритсета
     void expand(uint new_end);
@@ -75,9 +66,14 @@ public:
     void shrink();
 
     //потритовые операции
-    TritSet operator&(TritSet set);
     TritSet operator|(TritSet set);
     TritSet operator~();
 };
+
+TritSet operator&(const TritSet& set1, const TritSet& set2);
+
+//присваивание с операцией
+TritSet::reference& operator&=(TritSet::reference ref, Trit value);
+TritSet::reference& operator|=(TritSet::reference ref, Trit value);
 
 #endif //TRITSET_H

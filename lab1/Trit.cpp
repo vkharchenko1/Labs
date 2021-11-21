@@ -27,3 +27,11 @@ Trit operator|(Trit value1, Trit value2) {
         return Trit::Unknown;
     return Trit::False;
 }
+
+std::ostream& operator<<(std::ostream& out, Trit t) {
+    if (t == Trit::True)
+        return out << "True";
+    if (t == Trit::False)
+        return out << "False";
+    return out << "Unknown";
+}

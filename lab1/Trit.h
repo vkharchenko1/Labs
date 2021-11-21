@@ -1,6 +1,8 @@
 #ifndef TRIT_H
 #define TRIT_H
 
+#include <iostream>
+
 typedef unsigned int uint;
 
 //класс тритов
@@ -24,5 +26,8 @@ Trit operator&(Trit value1, Trit value2);
 
 //логическое "или"
 Trit operator|(Trit value1, Trit value2);
+
+//вывод трита
+std::ostream& operator<<(std::ostream& out, Trit t);
 
 #endif //TRIT_H
