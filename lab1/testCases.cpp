@@ -308,17 +308,39 @@ TEST_CASE("TRITSET TESTING shrink()") {
 }
 
 TEST_CASE("TRITSET TESTING &") {
-    TritSet set1(100);
+    TritSet set1(50);
     TritSet set2(40);
     for (int i = 0; i < 40; i++)
         set2[i] = Trit::False;
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 50; i++)
         set1[i] = Trit::True;
     TritSet set3 = set1 & set2;
     for (int i = 0; i < 40; i++)
         REQUIRE(set3[i] == Trit::False);
-    for (int i = 40; i < 100; i++) {
-        std::cout << i << ' ' << set3[i] << std::endl;
+    for (int i = 40; i < 50; i++)
         REQUIRE(set3[i] == Trit::Unknown);
+}
+
+TEST_CASE("TRITSET TESTING |") {
+    TritSet set1(50);
+    TritSet set2(40);
+    for (int i = 0; i < 40; i++)
+        set2[i] = Trit::False;
+    for (int i = 0; i < 50; i++)
+        set1[i] = Trit::True;
+    TritSet set3 = set1 | set2;
+    for (int i = 0; i < 40; i++)
+        REQUIRE(set3[i] == Trit::True);
+    for (int i = 40; i < 50; i++) {
+        REQUIRE(set3[i] == Trit::True);
     }
+}
+
+TEST_CASE("TRITSET TESTING ~") {
+    TritSet set1(40);
+    for (int i = 0; i < 20; i++)
+        set1[i] = Trit::True;
+    TritSet set2 = ~set1;
+    for (int i = 0; i < 20; i++)
+        REQUIRE(set2[i] == Trit::False);
 }

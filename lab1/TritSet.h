@@ -64,13 +64,12 @@ public:
     void expand(uint new_end);
     void trim(uint last_index);
     void shrink();
-
-    //потритовые операции
-    TritSet operator|(TritSet set);
-    TritSet operator~();
 };
 
+//Потритовые операции
 TritSet operator&(const TritSet& set1, const TritSet& set2);
+TritSet operator|(const TritSet& set1, const TritSet& set2);
+TritSet operator~(const TritSet& set);
 
 //присваивание с операцией
 TritSet::reference& operator&=(TritSet::reference ref, Trit value);

@@ -61,12 +61,10 @@ void TritSet::reference::setTrit(Trit value) {
 }
 
 TritSet::reference::operator Trit() {
-    std::cout << "dynamic " << r_value << std::endl;
     return r_value;
 }
 
 TritSet::reference::operator Trit() const{
-    std::cout << "const " << r_value << std::endl;
     return r_value;
 }
 
@@ -150,12 +148,12 @@ void TritSet::expand(uint new_end) {
 }
 
 void TritSet::trim(uint last_index) {
-    uint new_size = calcLength(last_index);
+    uint new_size = calcLength(last_index + 1);
     uint* new_data = new uint[new_size];
 
     std::copy(t_data, t_data + new_size - 1, new_data);
 
-    t_length = last_index;
+    t_length = last_index + 1;
     delete [] t_data;
     t_data = new_data;
 }
@@ -163,14 +161,10 @@ void TritSet::trim(uint last_index) {
 void TritSet::shrink() {
     uint last_index = this->length();
 
-    uint new_size = calcLength(last_index);
-    uint* new_data = new uint[new_size];
+    if (last_index != 0)
+        last_index--;
 
-    std::copy(t_data, t_data + new_size - 1, new_data);
-
-    t_length = last_index;
-    delete [] t_data;
-    t_data = new_data;
+    this->trim(last_index);
 }
 
 TritSet::~TritSet() {
@@ -186,18 +180,18 @@ TritSet operator&(const TritSet& set1, const TritSet& set2) {
     return res;
 }
 
-TritSet TritSet::operator|(TritSet set) {
-    uint new_size = std::max(t_length, set.length());
+TritSet operator|(const TritSet& set1, const TritSet& set2) {
+    uint new_size = std::max(set1.capacity(), set2.capacity());
     TritSet res(new_size);
     for (int i = 0; i < new_size; i++)
-        res[i] = (*this)[i] | set[i];
+        res[i] = set1[i] | set2[i];
     return res;
 }
 
-TritSet TritSet::operator~() {
-    TritSet res(t_length);
-    for (int i = 0; i < t_length; i++)
-        res[i] = ~(*this)[i];
+TritSet operator~(const TritSet& set) {
+    TritSet res(set.capacity());
+    for (int i = 0; i < set.capacity(); i++)
+        res[i] = ~set[i];
     return res;
 }
 
