@@ -22,6 +22,8 @@ WF_Read::WF_Read(int num, const std::string& filename) {
 }
 
 std::string* WF_Read::doBlock(std::string* in_text) {
+    if (in_text)
+        throw WF_Exception("Text passed to Read block\n");
     std::ifstream in_file;
     in_file.open(w_file);
 
@@ -70,6 +72,8 @@ WF_Write::WF_Write(int num, const std::string& filename) {
 }
         
 std::string* WF_Write::doBlock(std::string* in_text) {
+    if (!in_text)
+        throw WF_Exception("No text passed to Write block\n");
     std::ofstream out_file;
     out_file.open(w_file);
     
@@ -118,6 +122,8 @@ WF_Replace::WF_Replace(int num, const std::string& words) {
 }
 
 std::string* WF_Replace::doBlock(std::string *in_text) {
+    if (!in_text)
+        throw WF_Exception("No text passed to Replace block\n");
     int count = std::stoi(in_text[0]);
     size_t start;
 
@@ -157,6 +163,8 @@ WF_Grep::WF_Grep(int num, const std::string &word) {
 }
 
 std::string *WF_Grep::doBlock(std::string *in_text) {
+    if (!in_text)
+        throw WF_Exception("No text passed to Grep block\n");
     int in_size = std::stoi(in_text[0]);
     std::string* collecting_text = new std::string[in_size];
     int out_size = 0;
@@ -188,6 +196,8 @@ WF_Dump::WF_Dump(int num, const std::string &filename) {
 }
 
 std::string *WF_Dump::doBlock(std::string *in_text) {
+    if (!in_text)
+        throw WF_Exception("No text passed to Dump block\n");
     std::ofstream out_file;
     out_file.open(w_file);
 
@@ -212,6 +222,8 @@ WF_Sort::WF_Sort(int num) {
 }
 
 std::string *WF_Sort::doBlock(std::string *in_text) {
+    if (!in_text)
+        throw WF_Exception("No text passed to Sort block\n");
     int count = std::stoi(in_text[0]);
     std::sort(&in_text[1], &in_text[count] + 1);
     return in_text;
