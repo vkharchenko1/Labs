@@ -1,23 +1,7 @@
 #include "WF_Block.h"
 
-//WF_Block a.k.a. the parent block class
-WF_Block::WF_Block() {
-    w_num = 0;
-    w_type = NONE;
-}
-
-int WF_Block::getNumber() const {
-    return w_num;
-}
-
-int WF_Block::getType() const {
-    return w_type;
-}
-
 //Reading block
-WF_Read::WF_Read(int num, const std::string& filename) {
-    w_num = num;
-    w_type = READ;
+WF_Read::WF_Read(const std::string& filename) {
     w_file = filename;
 }
 
@@ -65,9 +49,7 @@ std::string* WF_Read::doBlock(std::string* in_text) {
 }
 
 //Writing Block
-WF_Write::WF_Write(int num, const std::string& filename) {
-    w_num = num;
-    w_type = WRITE;
+WF_Write::WF_Write(const std::string& filename) {
     w_file = filename;
 }
         
@@ -93,9 +75,7 @@ std::string* WF_Write::doBlock(std::string* in_text) {
 }
 
 //Replace Block
-WF_Replace::WF_Replace(int num, const std::string& words) {
-    w_num = num;
-    w_type = REPLACE;
+WF_Replace::WF_Replace(const std::string& words) {
     w_target = "";
     w_new = "";
 
@@ -137,9 +117,7 @@ std::string* WF_Replace::doBlock(std::string *in_text) {
 }
 
 //Grep Block
-WF_Grep::WF_Grep(int num, const std::string &word) {
-    w_num = num;
-    w_type = GREP;
+WF_Grep::WF_Grep(const std::string &word) {
     w_target = "";
 
     int input_mode = 0;
@@ -189,9 +167,7 @@ std::string *WF_Grep::doBlock(std::string *in_text) {
 }
 
 //Dump Block
-WF_Dump::WF_Dump(int num, const std::string &filename) {
-    w_num = num;
-    w_type = DUMP;
+WF_Dump::WF_Dump(const std::string &filename) {
     w_file = filename;
 }
 
@@ -216,11 +192,6 @@ std::string *WF_Dump::doBlock(std::string *in_text) {
 }
 
 //Sort Block
-WF_Sort::WF_Sort(int num) {
-    w_num = num;
-    w_type = SORT;
-}
-
 std::string *WF_Sort::doBlock(std::string *in_text) {
     if (!in_text)
         throw WF_Exception("No text passed to Sort block\n");

@@ -1,7 +1,9 @@
 #include "WF_Parser.h"
 
+#include <utility>
+
 WF_Parser::WF_Parser(std::string filename) {
-    w_file = filename;
+    w_file = std::move(filename);
 }
 
 Workflow WF_Parser::extractInterface() {
@@ -48,22 +50,22 @@ Workflow WF_Parser::extractInterface() {
 
         WF_Block* block_ptr;
         if (type == "readfile") {
-            block_ptr = new WF_Read(id, &line[pos]);
+            block_ptr = new WF_Read(&line[pos]);
         }
         else if (type == "writefile") {
-            block_ptr = new WF_Write(id, &line[pos]);
+            block_ptr = new WF_Write(&line[pos]);
         }
         else if (type == "grep") {
-            block_ptr = new WF_Grep(id, &line[pos]);
+            block_ptr = new WF_Grep( &line[pos]);
         }
         else if (type == "sort"){
-            block_ptr = new WF_Sort(id);
+            block_ptr = new WF_Sort();
         }
         else if (type == "replace"){
-            block_ptr = new WF_Replace(id, &line[pos]);
+            block_ptr = new WF_Replace(&line[pos]);
         }
         else if (type == "dump"){
-            block_ptr = new WF_Dump(id, &line[pos]);
+            block_ptr = new WF_Dump(&line[pos]);
         }
         else
             throw WF_Exception("Can't initialize a block: can't recognize a type\n");
