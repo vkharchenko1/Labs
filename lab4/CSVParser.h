@@ -17,7 +17,7 @@ void getTupleImpl(std::tuple<Args...>* new_tuple, std::stringstream *ss, char de
     while (ss->peek() != delimiter) {
         if (ss->eof())
             break;
-        *ss >> ch;
+        ss->get(ch);
         l += ch;
     }
     if (!ss->eof())
