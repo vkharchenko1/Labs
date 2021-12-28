@@ -17,7 +17,7 @@ void printTuple(std::basic_ostream<Ch, Tr>& os, std::tuple<Arg> const& t) {
 
 template<class Ch, class Tr, class Arg, class... Args>
 void printTuple(std::basic_ostream<Ch, Tr>& os, std::tuple<Arg, Args...> const& t) {
-    printTuple(os, std::make_tuple(std::get<0>(t)));
+    printTuple(os, std::make_tuple(std::get<    0>(t)));
     os << ", ";
     printTuple(os, tuple_tail(t));
 }

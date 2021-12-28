@@ -1,2 +1,3 @@
-2,text,1,1.5,40,good
-1,notext,2,2.5,10,bad
+2,text,2.5,2.0,2,good
+3,notext,2.5,12.2,2,bad
+1000, lambda, 135, 18.00, 17, ugly
